@@ -179,8 +179,8 @@ constexpr auto ctest_cond(u32 inst) -> bool {
     return std::byteswap(0xF50301AA) == inst; // mov x21, x1
 }
 
-constexpr auto nim_cond(u32 inst) -> bool {
-    return true;
+constexpr auto adr_cond(u32 inst) -> bool {
+    return ((inst >> 24) & 0xFF) == 0x10;
 }
 
 // to view patches, use https://armconverter.com/?lock=arm64
@@ -267,7 +267,7 @@ constinit Patterns nifm_patterns[] = {
 };
 
 constinit Patterns nim_patterns[] = {
-    { "nim", ".0F00351F2003D5", 8, 0, nim_cond, nim_patch, nim_applied, true },
+    { "nim", ".0F00351F2003D5", 8, 4, adr_cond, nim_patch, nim_applied, true },
 };
 
 // NOTE: add system titles that you want to be patched to this table.
