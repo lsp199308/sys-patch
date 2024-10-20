@@ -106,6 +106,8 @@ public:
         list->addItem(config_noncasigchk_new2.create_list_item("noncasigchk_new2"));
         list->addItem(config_nocntchk_old.create_list_item("nocntchk_old"));
         list->addItem(config_nocntchk_new.create_list_item("nocntchk_new"));
+        list->addItem(config_nocntchk_fw_19.create_list_item("nocntchk_fw_19"));
+        list->addItem(config_nocntchk_fw_19b.create_list_item("nocntchk_fw_19b"));
 
         list->addItem(new tsl::elm::CategoryHeader("LDR - 0100000000000001"));
         list->addItem(config_noacidsigchk.create_list_item("noacidsigchk"));
@@ -118,9 +120,13 @@ public:
         list->addItem(config_es5.create_list_item("es5"));
         list->addItem(config_es6.create_list_item("es6"));
         list->addItem(config_es7.create_list_item("es7"));
+        list->addItem(config_es_fw_19.create_list_item("es_fw_19"));
 
         list->addItem(new tsl::elm::CategoryHeader("NIFM - 010000000000000F"));
         list->addItem(config_ctest.create_list_item("ctest"));
+
+        list->addItem(new tsl::elm::CategoryHeader("NIM - 0100000000000025"));
+        list->addItem(config_nim.create_list_item("nim"));
 
         frame->setContent(list);
         return frame;
@@ -130,6 +136,8 @@ public:
     ConfigEntry config_noacidsigchk2{"fs", "noacidsigchk2", true};
     ConfigEntry config_noncasigchk_old{"fs", "noncasigchk_old", true};
     ConfigEntry config_noncasigchk_new{"fs", "noncasigchk_new", true};
+    ConfigEntry config_nocntchk_fw_19{"fs", "nocntchk_fw_19", true};
+    ConfigEntry config_nocntchk_fw_19b{"fs", "nocntchk_fw_19b", true};
     ConfigEntry config_noncasigchk_new2{"fs", "noncasigchk_new2", true};
     ConfigEntry config_nocntchk_old{"fs", "nocntchk_old", true};
     ConfigEntry config_nocntchk_new{"fs", "nocntchk_new", true};
@@ -141,7 +149,9 @@ public:
     ConfigEntry config_es5{"es", "es5", true};
     ConfigEntry config_es6{"es", "es6", true};
     ConfigEntry config_es7{"es", "es7", true};
+    ConfigEntry config_es_fw_19{"es", "es_fw_19", true};
     ConfigEntry config_ctest{"nifm", "ctest", false};
+    ConfigEntry config_nim{"nim", "nim", true};
 };
 
 class GuiLog final : public tsl::Gui {
