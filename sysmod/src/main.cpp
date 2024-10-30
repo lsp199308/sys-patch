@@ -251,21 +251,15 @@ constexpr auto nim_applied(const u8* data, u32 inst) -> bool {
 
 constinit Patterns fs_patterns[] = {
     //fat32 & exfat
-    //1.0.0-9.2.0系统
     //补丁：e0031f2a
     { "1-9A", "0x........0036..00b4..40b9", 2, 0, bl_cond, ret0_patch, ret0_applied, true, MAKEHOSVERSION(1,0,0), MAKEHOSVERSION(9,2,0) },
     { "1-9B", "0x....0094.0210911f000072", 2, 0, bl_cond, ret0_patch, ret0_applied, true, MAKEHOSVERSION(1,0,0), MAKEHOSVERSION(9,2,0) },
     { "1-9C", "0x.40f9...94081c00121f050071", 2, 0, bl_cond, ret0_patch, ret0_applied, true, MAKEHOSVERSION(1,0,0), MAKEHOSVERSION(9,2,0) },
-    //补丁：1f2003d5
-    { "1-9D", "0x.97..0036881e42b9", 2, 0, tbz_cond, nop_patch, nop_applied, true, MAKEHOSVERSION(1,0,0), MAKEHOSVERSION(9,2,0) },
-    //10.0.0
-    //补丁：e0031f2a
-    { "10A", "0x0091c5b10194fd7b43a9f44f42a9", 2, 0, bl_cond, ret0_patch, ret0_applied, true, MAKEHOSVERSION(10,0,0), MAKEHOSVERSION(10,1,0) },
-    { "10-18A", "0x40f9...9408.0012.050071", 2, 0, bl_cond, ret0_patch, ret0_applied, true, MAKEHOSVERSION(10,2,0), MAKEHOSVERSION(18,1,0) },
+    { "10-18A", "0x40f9...9408.0012.050071", 2, 0, bl_cond, ret0_patch, ret0_applied, true, MAKEHOSVERSION(10,0,0), MAKEHOSVERSION(18,1,0) },
     { "19A", "0x40f9...94..40b9..0012", 2, 0, bl_cond, ret0_patch, ret0_applied, true, MAKEHOSVERSION(19,0,0) },
 
     //补丁：1f2003d5
-    { "10D", "0xe80a009008613b91280000f9c0035fd6", 2, 0, tbz_cond, nop_patch, nop_applied, true, MAKEHOSVERSION(10,0,0), MAKEHOSVERSION(10,1,0) },
+    { "1-9D", "0x.97..0036881e42b9", 2, 0, tbz_cond, nop_patch, nop_applied, true, MAKEHOSVERSION(1,0,0), MAKEHOSVERSION(9,2,0) },
     { "10-16D", "0x0036.......71..0054..4839", -2, 0, tbz_cond, nop_patch, nop_applied, true, MAKEHOSVERSION(10,0,0), MAKEHOSVERSION(16,1,0) },
     { "17-19D", "0x.94..0036.258052", 2, 0, tbz_cond, nop_patch, nop_applied, true, MAKEHOSVERSION(17,0,0), },//fw17-fw19
 };
