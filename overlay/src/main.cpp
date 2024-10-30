@@ -102,15 +102,11 @@ public:
         list->addItem(config_1_9A.create_list_item("1_9A"));
         list->addItem(config_1_9B.create_list_item("1_9B"));
         list->addItem(config_1_9C.create_list_item("1_9C"));
-        list->addItem(config_1_9D.create_list_item("1_9D"));
-        list->addItem(config_10A.create_list_item("10A"));
         list->addItem(config_10_18A.create_list_item("10_18A"));
         list->addItem(config_19A.create_list_item("19A"));
-        list->addItem(config_10D.create_list_item("10D"));
-        list->addItem(config_10_14D.create_list_item("10_14D"));
-        list->addItem(config_15_16D.create_list_item("15_16D"));
-        list->addItem(config_17_18D.create_list_item("17_18D"));
-        list->addItem(config_19D.create_list_item("19D"));
+        list->addItem(config_1_9D.create_list_item("1_9D"));
+        list->addItem(config_10_16D.create_list_item("10_16D"));
+        list->addItem(config_17_19D.create_list_item("17_19D"));
 
         list->addItem(new tsl::elm::CategoryHeader("LDR - 0100000000000001"));
         list->addItem(config_noacidsigchk.create_list_item("noacidsigchk"));
@@ -133,15 +129,11 @@ public:
     ConfigEntry config_1_9A{"fs", "1_9A", true};
     ConfigEntry config_1_9B{"fs", "1_9B", true};
     ConfigEntry config_1_9C{"fs", "1_9C", true};
-    ConfigEntry config_1_9D{"fs", "1_9D", true};
-    ConfigEntry config_10A{"fs", "10A", true};
     ConfigEntry config_10_18A{"fs", "10_18A", true};
     ConfigEntry config_19A{"fs", "19A", true};
-    ConfigEntry config_10D{"fs", "10D", true};
-    ConfigEntry config_10_14D{"fs", "10_14D", true};
-    ConfigEntry config_15_16D{"fs", "15_16D", true};
-    ConfigEntry config_17_18D{"fs", "17_18D", true};
-    ConfigEntry config_19D{"fs", "19D", true};
+    ConfigEntry config_1_9D{"fs", "1_9D", true};
+    ConfigEntry config_10_16D{"fs", "10_16D", true};
+    ConfigEntry config_17_19D{"fs", "17_19D", true};
     ConfigEntry config_noacidsigchk{"ldr", "noacidsigchk", true};
     ConfigEntry config_1{"es", "1", true};
     ConfigEntry config_2_8{"es", "2_8", true};
