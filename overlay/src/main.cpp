@@ -74,11 +74,11 @@ public:
         auto frame = new tsl::elm::OverlayFrame("sys-patch", VERSION_WITH_HASH);
         auto list = new tsl::elm::List();
 
-        list->addItem(new tsl::elm::CategoryHeader("Options"));
-        list->addItem(config_patch_sysmmc.create_list_item("Patch_sysmmc"));
-        list->addItem(config_patch_emummc.create_list_item("Patch_emummc"));
-        list->addItem(config_logging.create_list_item("Logging"));
-        list->addItem(config_version_skip.create_list_item("Version_skip"));
+        list->addItem(new tsl::elm::CategoryHeader("选项"));
+        list->addItem(config_patch_sysmmc.create_list_item("修补真实"));
+        list->addItem(config_patch_emummc.create_list_item("修补虚拟"));
+        list->addItem(config_logging.create_list_item("日志"));
+        list->addItem(config_version_skip.create_list_item("跳过版本检查"));
 
         frame->setContent(list);
         return frame;
@@ -185,11 +185,11 @@ public:
 
                 if (value.starts_with("Patched")) {
                     if (value.ends_with("(sys-patch)")) {
-                        user->list->addItem(new tsl::elm::ListItem(Key, "Patched", colour_syspatch));
+                        user->list->addItem(new tsl::elm::ListItem(Key, "修补", colour_syspatch));
                     } else {
-                        user->list->addItem(new tsl::elm::ListItem(Key, "Patched", colour_file));
+                        user->list->addItem(new tsl::elm::ListItem(Key, "修补", colour_file));
                     }
-                } else if (value.starts_with("Unpatched") || value.starts_with("Disabled")) {
+                } else if (value.starts_with("未修补") || value.starts_with("Disabled")) {
                     user->list->addItem(new tsl::elm::ListItem(Key, Value, colour_unpatched));
                 } else if (user->last_section == "stats") {
                     user->list->addItem(new tsl::elm::ListItem(Key, Value, tsl::style::color::ColorDescription));
@@ -200,7 +200,7 @@ public:
                 return 1;
             }, &callback_userdata, LOG_PATH);
         } else {
-            list->addItem(new tsl::elm::ListItem("No log found!"));
+            list->addItem(new tsl::elm::ListItem("未找到日志!"));
         }
 
         frame->setContent(list);
@@ -216,9 +216,9 @@ public:
         auto frame = new tsl::elm::OverlayFrame("sys-patch", VERSION_WITH_HASH);
         auto list = new tsl::elm::List();
 
-        auto options = new tsl::elm::ListItem("Options");
-        auto toggle = new tsl::elm::ListItem("Toggle patches");
-        auto log = new tsl::elm::ListItem("Log");
+        auto options = new tsl::elm::ListItem("选项");
+        auto toggle = new tsl::elm::ListItem("切换补丁");
+        auto log = new tsl::elm::ListItem("日志");
 
         options->setClickListener([](u64 keys) -> bool {
             if (keys & HidNpadButton_A) {
@@ -244,7 +244,7 @@ public:
             return false;
         });
 
-        list->addItem(new tsl::elm::CategoryHeader("Menu"));
+        list->addItem(new tsl::elm::CategoryHeader("菜单"));
         list->addItem(options);
         list->addItem(toggle);
         list->addItem(log);

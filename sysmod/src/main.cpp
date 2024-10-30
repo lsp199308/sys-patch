@@ -651,17 +651,17 @@ int main(int argc, char* argv[]) {
         // defined in the Makefile
         #define DATE (DATE_DAY "." DATE_MONTH "." DATE_YEAR " " DATE_HOUR ":" DATE_MIN ":" DATE_SEC)
 
-        ini_puts("stats", "version", VERSION_WITH_HASH, log_path);
-        ini_puts("stats", "build_date", DATE, log_path);
-        ini_puts("stats", "fw_version", fw_version, log_path);
-        ini_puts("stats", "ams_version", ams_version, log_path);
-        ini_puts("stats", "ams_target_version", ams_target_version, log_path);
-        ini_puts("stats", "ams_keygen", ams_keygen, log_path);
-        ini_puts("stats", "ams_hash", ams_hash, log_path);
-        ini_putl("stats", "is_emummc", emummc, log_path);
-        ini_putl("stats", "heap_size", INNER_HEAP_SIZE, log_path);
-        ini_putl("stats", "buffer_size", READ_BUFFER_SIZE, log_path);
-        ini_puts("stats", "patch_time", patch_time, log_path);
+        ini_puts("stats", "版本", VERSION_WITH_HASH, log_path);
+        ini_puts("stats", "构建日期", DATE, log_path);
+        ini_puts("stats", "系统版本", fw_version, log_path);
+        ini_puts("stats", "AMS版本", ams_version, log_path);
+        ini_puts("stats", "AMS目标版本", ams_target_version, log_path);
+        ini_puts("stats", "AMS密钥", ams_keygen, log_path);
+        ini_puts("stats", "AMS散列", ams_hash, log_path);
+        ini_putl("stats", "虚拟系统", emummc, log_path);
+        ini_putl("stats", "堆大小", INNER_HEAP_SIZE, log_path);
+        ini_putl("stats", "缓冲区大小", READ_BUFFER_SIZE, log_path);
+        ini_puts("stats", "修补时间", patch_time, log_path);
     }
 
     // note: sysmod exits here.
