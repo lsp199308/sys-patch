@@ -141,7 +141,8 @@ constexpr auto subr_cond(u32 inst) -> bool {
 }
 
 constexpr auto bl_cond(u32 inst) -> bool {
-    return ((inst >> 26) & 0x3F) == 0x25;
+    const auto type = inst >> 24;
+    return type == 0x25 || type == 0x94;
 }
 
 constexpr auto tbz_cond(u32 inst) -> bool {
@@ -167,6 +168,13 @@ constexpr auto bne_cond(u32 inst) -> bool {
     return type == 0x54 || cond == 0x0;
 }
 
+constexpr auto beq_cond(u32 inst) -> bool {
+    return (inst >> 24) == 0x54; // beq, 0x710011c94c
+}
+
+constexpr auto str_cond(u32 inst) -> bool {
+    return (inst >> 24) == 0xB9; // str, w8,[x19, #0x15c]
+}
 constexpr auto ctest_cond(u32 inst) -> bool {
     return std::byteswap(0xF50301AA) == inst; // mov x21, x1
 }
@@ -191,6 +199,10 @@ constexpr auto mov2_cond(u32 inst) -> bool {
     }
 }
 
+constexpr auto mov_cond3(u32 inst) -> bool {
+    return (inst >> 24) == 0xD2; // mov x10, #0x3
+}
+
 constexpr auto b_cond(u32 inst) -> bool {
      const auto type = inst >> 24;
      return type == 0x14 || type == 0x17;
@@ -201,6 +213,8 @@ constexpr PatchData ret0_patch_data{ "0xE0031F2A" };
 constexpr PatchData ret1_patch_data{ "0x10000014" }; //b #0x40
 constexpr PatchData nop_patch_data{ "0x1F2003D5" };
 constexpr PatchData mov0_patch_data{ "0xE0031FAA" };
+constexpr PatchData ssl1_patch_data{ "0x0A" };
+constexpr PatchData ssl2_patch_data{ "0x08008052" };
 constexpr PatchData ctest_patch_data{ "0x00309AD2001EA1F2610100D4E0031FAAC0035FD6" };
 constexpr PatchData nim_patch_data{ "0xE2031FAA" };
 
@@ -209,6 +223,8 @@ constexpr auto ret1_patch(u32 inst) -> PatchData { return ret1_patch_data; }
 constexpr auto nop_patch(u32 inst) -> PatchData { return nop_patch_data; }
 constexpr auto subs_patch(u32 inst) -> PatchData { return subi_cond(inst) ? (u8)0x1 : (u8)0x0; }
 constexpr auto mov0_patch(u32 inst) -> PatchData { return mov0_patch_data; }
+constexpr auto ssl1_patch(u32 inst) -> PatchData { return ssl1_patch_data; }
+constexpr auto ssl2_patch(u32 inst) -> PatchData { return ssl2_patch_data; }
 constexpr auto ctest_patch(u32 inst) -> PatchData { return ctest_patch_data; }
 constexpr auto nim_patch(u32 inst) -> PatchData { return nim_patch_data; }
 
@@ -244,6 +260,14 @@ constexpr auto b_applied(const u8* data, u32 inst) -> bool {
 
 constexpr auto mov0_applied(const u8* data, u32 inst) -> bool {
     return mov0_patch(inst).cmp(data);
+}
+
+constexpr auto ssl1_applied(const u8* data, u32 inst) -> bool {
+    return ssl1_patch(inst).cmp(data);
+}
+
+constexpr auto ssl2_applied(const u8* data, u32 inst) -> bool {
+    return ssl2_patch(inst).cmp(data);
 }
 
 constexpr auto ctest_applied(const u8* data, u32 inst) -> bool {
@@ -288,6 +312,12 @@ constinit Patterns nim_patterns[] = {
     { "nim", ".0F00351F2003D5", 8 ,0, adr_cond, nim_patch, nim_applied, true, MAKEHOSVERSION(17,0,0) },
 };
 
+constinit Patterns ssl_patterns[] = {
+    { "disablecaverification1", "0x6A0080D2", 0, 0, mov_cond3, ssl1_patch, ssl1_applied, false, FW_VER_ANY },
+    { "disablecaverification2", "0x2409437AA0000054", 4, 0, beq_cond, ret1_patch, ret1_applied, false, FW_VER_ANY },
+    { "disablecaverification3", "0x88160012", 4, 0, str_cond, ssl2_patch, ssl2_applied, false, FW_VER_ANY },
+};
+
 // NOTE: add system titles that you want to be patched to this table.
 // a list of system titles can be found here https://switchbrew.org/wiki/Title_list
 constinit PatchEntry patches[] = {
@@ -298,6 +328,7 @@ constinit PatchEntry patches[] = {
     { "nifm", 0x010000000000000F, nifm_patterns },
     // es was added in fw 17
     { "nim", 0x0100000000000025, nim_patterns, MAKEHOSVERSION(17,0,0), },
+    { "ssl", 0x0100000000000024, ssl_patterns },
 };
 
 struct EmummcPaths {
@@ -392,7 +423,8 @@ auto apply_patch(PatchEntry& patch) -> bool {
 
     u64 pids[0x50]{};
     s32 process_count{};
-    static u8 buffer[READ_BUFFER_SIZE];
+    constexpr u64 overlap_size = 0x4f;
+    static u8 buffer[READ_BUFFER_SIZE + overlap_size];
 
     // skip if version isn't valid
     if (VERSION_SKIP &&
@@ -431,14 +463,15 @@ auto apply_patch(PatchEntry& patch) -> bool {
                     continue;
                 }
 
-                // todo: the byte pattern can in between 2 READ_BUFFER_SIZE boundries!
-                for (u64 sz = 0; sz < mem_info.size; sz += READ_BUFFER_SIZE) {
-                    const auto actual_size = std::min(READ_BUFFER_SIZE, mem_info.size);
-                    if (R_FAILED(svcReadDebugProcessMemory(buffer, handle, mem_info.addr + sz, actual_size))) {
-                        // todo: log failed reads!
+                for (u64 sz = 0; sz < mem_info.size; sz += READ_BUFFER_SIZE - overlap_size) {
+                    const auto actual_size = std::min(READ_BUFFER_SIZE, mem_info.size - sz);
+                    if (R_FAILED(svcReadDebugProcessMemory(buffer + overlap_size, handle, mem_info.addr + sz, actual_size))) {
                         break;
                     } else {
-                        patcher(handle, std::span{buffer, actual_size}, mem_info.addr + sz, patch.patterns);
+                        patcher(handle, std::span{buffer, actual_size + overlap_size}, mem_info.addr + sz - overlap_size, patch.patterns);
+                         if (actual_size >= overlap_size) {
+                             memcpy(buffer, buffer + actual_size, overlap_size);
+                         }
                     }
                 }
             }

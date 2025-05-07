@@ -123,6 +123,11 @@ public:
         list->addItem(new tsl::elm::CategoryHeader("NIM - 0100000000000025"));
         list->addItem(config_nim.create_list_item("nim"));
 
+        list->addItem(new tsl::elm::CategoryHeader("Disable CA Verification - apply all"));
+        list->addItem(config_ssl1.create_list_item("disablecaverification1"));
+        list->addItem(config_ssl2.create_list_item("disablecaverification2"));
+        list->addItem(config_ssl3.create_list_item("disablecaverification3"));
+
         frame->setContent(list);
         return frame;
     }
@@ -131,17 +136,20 @@ public:
     ConfigEntry config_1_9B{"fs", "1_9B", true};
     ConfigEntry config_1_9C{"fs", "1_9C", true};
     ConfigEntry config_10_18A{"fs", "10_18A", true};
-    ConfigEntry config_19A{"fs", "19_20A", true};
+    ConfigEntry config_19_20A{"fs", "19_20A", true};
     ConfigEntry config_1_9D{"fs", "1_9D", true};
     ConfigEntry config_10_16D{"fs", "10_16D", true};
-    ConfigEntry config_17_19D{"fs", "17_20D", true};
+    ConfigEntry config_17_20D{"fs", "17_20D", true};
     ConfigEntry config_noacidsigchk{"ldr", "noacidsigchk", true};
     ConfigEntry config_1{"es", "1", true};
     ConfigEntry config_2_8{"es", "2_8", true};
-    ConfigEntry config_9_19{"es", "9_20", true};
+    ConfigEntry config_9_20{"es", "9_20", true};
     ConfigEntry config_ctest{"nifm", "ctest", true};
     ConfigEntry config_ctest2{"nifm", "ctest2", true};
     ConfigEntry config_nim{"nim", "nim", true};
+    ConfigEntry config_ssl1{"ssl", "disablecaverification1", false};
+    ConfigEntry config_ssl2{"ssl", "disablecaverification2", false};
+    ConfigEntry config_ssl3{"ssl", "disablecaverification3", false};
 };
 
 class GuiLog final : public tsl::Gui {
