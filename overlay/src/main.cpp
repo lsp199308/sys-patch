@@ -103,10 +103,10 @@ public:
         list->addItem(config_1_9B.create_list_item("1_9B"));
         list->addItem(config_1_9C.create_list_item("1_9C"));
         list->addItem(config_10_18A.create_list_item("10_18A"));
-        list->addItem(config_19A.create_list_item("19_20A"));
+        list->addItem(config_19_20A.create_list_item("19_20A"));
         list->addItem(config_1_9D.create_list_item("1_9D"));
         list->addItem(config_10_16D.create_list_item("10_16D"));
-        list->addItem(config_17_19D.create_list_item("17_20D"));
+        list->addItem(config_17_20D.create_list_item("17_20D"));
 
         list->addItem(new tsl::elm::CategoryHeader("LDR - 0100000000000001"));
         list->addItem(config_noacidsigchk.create_list_item("noacidsigchk"));
@@ -114,7 +114,7 @@ public:
         list->addItem(new tsl::elm::CategoryHeader("ES - 0100000000000033"));
         list->addItem(config_1.create_list_item("1"));
         list->addItem(config_2_8.create_list_item("2_8"));
-        list->addItem(config_9_19.create_list_item("9_20"));
+        list->addItem(config_9_20.create_list_item("9_20"));
 
         list->addItem(new tsl::elm::CategoryHeader("NIFM - 010000000000000F"));
         list->addItem(config_ctest.create_list_item("ctest"));
