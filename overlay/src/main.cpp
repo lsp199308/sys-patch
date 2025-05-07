@@ -103,10 +103,10 @@ public:
         list->addItem(config_1_9B.create_list_item("1_9B"));
         list->addItem(config_1_9C.create_list_item("1_9C"));
         list->addItem(config_10_18A.create_list_item("10_18A"));
-        list->addItem(config_19A.create_list_item("19A"));
+        list->addItem(config_19A.create_list_item("19_20A"));
         list->addItem(config_1_9D.create_list_item("1_9D"));
         list->addItem(config_10_16D.create_list_item("10_16D"));
-        list->addItem(config_17_19D.create_list_item("17_19D"));
+        list->addItem(config_17_19D.create_list_item("17_20D"));
 
         list->addItem(new tsl::elm::CategoryHeader("LDR - 0100000000000001"));
         list->addItem(config_noacidsigchk.create_list_item("noacidsigchk"));
@@ -114,10 +114,11 @@ public:
         list->addItem(new tsl::elm::CategoryHeader("ES - 0100000000000033"));
         list->addItem(config_1.create_list_item("1"));
         list->addItem(config_2_8.create_list_item("2_8"));
-        list->addItem(config_9_19.create_list_item("9_19"));
+        list->addItem(config_9_19.create_list_item("9_20"));
 
         list->addItem(new tsl::elm::CategoryHeader("NIFM - 010000000000000F"));
         list->addItem(config_ctest.create_list_item("ctest"));
+        list->addItem(config_ctest2.create_list_item("ctest2"));
 
         list->addItem(new tsl::elm::CategoryHeader("NIM - 0100000000000025"));
         list->addItem(config_nim.create_list_item("nim"));
@@ -130,15 +131,16 @@ public:
     ConfigEntry config_1_9B{"fs", "1_9B", true};
     ConfigEntry config_1_9C{"fs", "1_9C", true};
     ConfigEntry config_10_18A{"fs", "10_18A", true};
-    ConfigEntry config_19A{"fs", "19A", true};
+    ConfigEntry config_19A{"fs", "19_20A", true};
     ConfigEntry config_1_9D{"fs", "1_9D", true};
     ConfigEntry config_10_16D{"fs", "10_16D", true};
-    ConfigEntry config_17_19D{"fs", "17_19D", true};
+    ConfigEntry config_17_19D{"fs", "17_20D", true};
     ConfigEntry config_noacidsigchk{"ldr", "noacidsigchk", true};
     ConfigEntry config_1{"es", "1", true};
     ConfigEntry config_2_8{"es", "2_8", true};
-    ConfigEntry config_9_19{"es", "9_19", true};
+    ConfigEntry config_9_19{"es", "9_20", true};
     ConfigEntry config_ctest{"nifm", "ctest", true};
+    ConfigEntry config_ctest2{"nifm", "ctest2", true};
     ConfigEntry config_nim{"nim", "nim", true};
 };
 
